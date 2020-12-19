@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mars Rover App", "Mars Rover App\Mars Rover App.csproj", "{1773C168-88AF-4BBD-B4D2-898222CA8EA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mars Rover Console App", "Mars Rover Console App\Mars Rover Console App.csproj", "{C09E8489-584E-4DF0-AC98-D7A9CB4C2E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mars Rover Console App", "Mars Rover Console App\Mars Rover Console App.csproj", "{C09E8489-584E-4DF0-AC98-D7A9CB4C2E06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mars Rover XUnitTest", "Mars Rover XUnitTest\Mars Rover XUnitTest.csproj", "{D2C2D737-6FA5-48D3-B1B1-46F4414AFDA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C09E8489-584E-4DF0-AC98-D7A9CB4C2E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C09E8489-584E-4DF0-AC98-D7A9CB4C2E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C09E8489-584E-4DF0-AC98-D7A9CB4C2E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C2D737-6FA5-48D3-B1B1-46F4414AFDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C2D737-6FA5-48D3-B1B1-46F4414AFDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C2D737-6FA5-48D3-B1B1-46F4414AFDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C2D737-6FA5-48D3-B1B1-46F4414AFDA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
