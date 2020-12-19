@@ -1,0 +1,187 @@
+﻿@page "/"
+
+@using Mars_Rover_App.Data
+@inject SimulateService SimulateService
+
+<h1>Welcome to Mars Rover</h1>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-6">
+
+            <h>Plateau Origin</h>
+            <EditForm Model="@AppUiData" OnValidSubmit="@AddRover">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+
+
+
+                <label>Plateau Origin X </label> <InputNumber style="width:100px" id="name" class="form-control" placeholder="Plateau Origin X" aria-label="Plateau Origin X" @bind-Value="AppUiData.PlateauModel.PlateauMaxX" />
+
+                <label>Plateau Origin Y </label>   <InputNumber style="width:100px" id="name" class="form-control" placeholder="Plateau Origin Y" aria-label="Plateau Origin Y" @bind-Value="AppUiData.PlateauModel.PlateauMaxY" />
+
+            </EditForm>
+
+            <p></p>
+
+            <p>Rover's orientation</p>
+            <EditForm Model="@AppUiData" OnValidSubmit="@AddRover">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+
+                <label>Rover-X" </label>  <InputNumber style="width:100px" id="name" type="numeric" class="form-control" placeholder="Rover-X" aria-label="Rover-X" @bind-Value="roverModel.RoverX" />
+                <label>Rover-Y </label>  <InputNumber style="width:100px" id="name" type="numeric" class="form-control" placeholder="Rover-Y" aria-label="Rover-Y" @bind-Value="roverModel.RoverY" />
+                <label>Rover-D </label> <InputText style="width:100px" id="name" type="text" class="form-control" aria-label="Rover-D" @bind-Value="roverModel.RoverD" />
+                <label>Rover Commands </label> <InputText style="width:100px" id="name" type="text" class="form-control" aria-label="Rover Command" @bind-Value="roverModel.RoverCommands" />
+
+                <button type="submit">Add</button>
+
+            </EditForm>
+        </div>
+        <div class="col-sm-6">
+
+            @((MarkupString)html)
+         
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Rover Name</th>
+            <th>Rover X</th>
+            <th>Rover Y</th>
+            <th>Rover Directionor</th>
+            @{ if (!ExecuteCommand)
+                {
+                    <th>Rover Commands</th>
+                }
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rover in AppUiData.RoverModels)
+        {
+            <tr>
+                <td>@rover.RoverName</td>
+                <td>@rover.RoverX</td>
+                <td>@rover.RoverY</td>
+                <td>@rover.RoverD</td>
+                @if (!ExecuteCommand)
+                {
+                    <td>@rover.RoverCommands</td>
+                }
+                else
+                {
+                    <td>Rover Last Status</td>
+                }
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+<button class="btn btn-primary" @onclick="RunSimulate">Simulate Rover Location </button>
+
+
+@code {
+
+    private static int RoverCount = 0;
+    private bool ExecuteCommand = false;
+    private string html = "";
+    private MarsRoverModel AppUiData = new()
+    {
+        PlateauModel = new(),
+        RoverModels = new()
+
+    };
+    private RoverModel roverModel = new();
+
+    private void AddRover()
+    {
+        RoverCount++;
+        roverModel.RoverName = "Rover " + RoverCount;
+        AppUiData.RoverModels.Add(roverModel);
+        roverModel = new();
+        DrawPlateu();
+
+    }
+
+    private void DrawPlateu()
+    {
+        int x = 0;
+        int y = 0;
+        html = " <table class='table1'> <tbody style=' border: 2px solid black;'>";
+
+        for ( y = 0; y < AppUiData.PlateauModel.PlateauMaxY; y++)
+        {
+            html += "<tr  style=' border: 2px solid black;'>";
+            for ( x = 0; x < AppUiData.PlateauModel.PlateauMaxX; x++)
+            {
+                if (AppUiData.RoverModels.Count>0)
+                {
+                    AppUiData.RoverModels.All(p =>
+                    {
+
+                        if (p.RoverX== AppUiData.PlateauModel.PlateauMaxX-x && p.RoverY == AppUiData.PlateauModel.PlateauMaxY-y)
+                        {
+                            html += " <td  style=' border: 2px solid black;width:50px;height:50px;'> " +p.RoverName+" D:"+p.RoverD +   "</td>";
+                        }
+                        else
+                        {
+                            html += " <td  style=' border: 2px solid black;width:50px;height:50px;'>     </td>";
+                        }
+                        return true;
+                    });
+                }
+                else
+                {
+                    html += " <td  style=' border: 2px solid black;width:50px;height:50px;'>     </td>";
+                }
+
+
+            }
+            html += " </tr>";
+        }
+
+        html += "</ tbody ></ table >";
+
+
+
+
+    }
+
+
+
+    private void RunSimulate()
+    {
+        SimulateService.RunSimulate(AppUiData);
+        ExecuteCommand = true;
+        DrawPlateu();
+
+    }
+
+
+}
+
+
+
+
+
+
