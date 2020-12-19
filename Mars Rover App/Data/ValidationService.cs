@@ -46,11 +46,13 @@ namespace Mars_Rover_App.Data
         /// <param name="roverModel"></param>
        public static void CheckRoverMoveStatus(RoverModel roverModel)
         {
-            if (roverModel.RoverX > PlateauSize.PlateauX || roverModel.RoverY > PlateauSize.PlateauY)
+
+            var rovers = SimulateService._inputDataRef.RoverModels;
+            if (roverModel.RoverX > SimulateService._inputDataRef.PlateauModel.PlateauMaxX|| roverModel.RoverY > SimulateService._inputDataRef.PlateauModel.PlateauMaxY)
             {
                 throw new Exception("Invalid location for "+roverModel.RoverName);
             }
-            var rovers =SimulateService._inputDataRef.RoverModels;
+          
 
             var anotherRoverIsSameOrigin = (from rover in rovers
                                             where rover.RoverName != roverModel.RoverName && rover.RoverX == roverModel.RoverX && rover.RoverY == roverModel.RoverY
